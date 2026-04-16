@@ -1,13 +1,18 @@
+// Local HTTPS dev server with proxy to FastAPI backend.
+// In production (Vercel), Next.js handles routing via next.config.ts rewrites.
 import { createServer as createHttpsServer } from "https";
-import { request as httpRequest } from "http";
+import { request as httpRequest, request as httpsRequest } from "http";
+import { request as httpsRequestSecure } from "https";
 import { readFileSync } from "fs";
 import { parse } from "url";
 import next from "next";
 
 const dev = false;
 const hostname = "0.0.0.0";
-const port = 3000;
-const BACKEND = "http://localhost:8000";
+const port = Number(process.env.PORT) || 3000;
+const BACKEND = process.env.BACKEND_URL || "http://localhost:8000";
+const backendParsed = new URL(BACKEND);
+const isHttps = backendParsed.protocol === "https:";
 
 const app = next({ dev, hostname, port });
 const handle = app.getRequestHandler();
@@ -23,17 +28,17 @@ app.prepare().then(() => {
 
     // Proxy /api/* requests to FastAPI backend
     if (parsedUrl.pathname?.startsWith("/api/")) {
-      const backendUrl = new URL(req.url, BACKEND);
+      const reqFn = isHttps ? httpsRequestSecure : httpRequest;
 
-      const proxyReq = httpRequest(
+      const proxyReq = reqFn(
         {
-          hostname: "localhost",
-          port: 8000,
+          hostname: backendParsed.hostname,
+          port: backendParsed.port || (isHttps ? 443 : 80),
           path: req.url,
           method: req.method,
           headers: {
             ...req.headers,
-            host: "localhost:8000",
+            host: backendParsed.host,
           },
         },
         (proxyRes) => {
@@ -52,7 +57,6 @@ app.prepare().then(() => {
       return;
     }
 
-    // Everything else → Next.js
     await handle(req, res, parsedUrl);
   }).listen(port, hostname, () => {
     console.log(`> RetroScan AI running on https://0.0.0.0:${port}`);
