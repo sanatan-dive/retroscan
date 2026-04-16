@@ -1,0 +1,310 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/* ─── LIGHT THEME (DEFAULT) ──────────────────────────────────────────────────
+ * Editorial palette: warm bone background, ink-black text,
+ * single confident accent (Indian saffron-adjacent burnt orange).
+ * Inspired by premium editorial / government-craftsmanship aesthetics.
+ */
+:root {
+  --background: oklch(0.985 0.005 80);          /* warm bone #FAFAF7 */
+  --foreground: oklch(0.18 0.012 60);           /* deep ink */
+  --card: oklch(1 0 0);                         /* pure white cards */
+  --card-foreground: oklch(0.18 0.012 60);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.18 0.012 60);
+  --primary: oklch(0.6 0.21 38);                /* burnt orange / saffron */
+  --primary-foreground: oklch(0.99 0.005 80);
+  --secondary: oklch(0.96 0.008 80);            /* warm grey-cream */
+  --secondary-foreground: oklch(0.22 0.012 60);
+  --muted: oklch(0.95 0.008 80);
+  --muted-foreground: oklch(0.46 0.012 60);
+  --accent: oklch(0.94 0.012 80);
+  --accent-foreground: oklch(0.22 0.012 60);
+  --destructive: oklch(0.55 0.22 22);
+  --border: oklch(0.9 0.012 75);                /* soft warm border */
+  --input: oklch(0.92 0.012 75);
+  --ring: oklch(0.6 0.21 38);                   /* saffron focus ring */
+  --chart-1: oklch(0.6 0.21 38);                /* saffron */
+  --chart-2: oklch(0.45 0.15 250);              /* deep indigo */
+  --chart-3: oklch(0.55 0.18 150);              /* deep teal */
+  --chart-4: oklch(0.5 0.2 25);                 /* terracotta */
+  --chart-5: oklch(0.35 0.05 60);               /* warm charcoal */
+  --radius: 0.625rem;
+  --sidebar: oklch(0.97 0.008 80);
+  --sidebar-foreground: oklch(0.22 0.012 60);
+  --sidebar-primary: oklch(0.6 0.21 38);
+  --sidebar-primary-foreground: oklch(0.99 0.005 80);
+  --sidebar-accent: oklch(0.94 0.012 80);
+  --sidebar-accent-foreground: oklch(0.22 0.012 60);
+  --sidebar-border: oklch(0.9 0.012 75);
+  --sidebar-ring: oklch(0.6 0.21 38);
+}
+
+/* ─── DARK THEME (OPTIONAL) ──────────────────────────────────────────────────
+ * Premium dark mode: ink black + warm cream + saffron accent.
+ */
+.dark {
+  --background: oklch(0.13 0.01 60);            /* near-black with warm tint */
+  --foreground: oklch(0.95 0.008 80);
+  --card: oklch(0.17 0.012 60);
+  --card-foreground: oklch(0.95 0.008 80);
+  --popover: oklch(0.18 0.012 60);
+  --popover-foreground: oklch(0.95 0.008 80);
+  --primary: oklch(0.7 0.18 40);                /* slightly brighter saffron for dark */
+  --primary-foreground: oklch(0.13 0.01 60);
+  --secondary: oklch(0.22 0.012 60);
+  --secondary-foreground: oklch(0.95 0.008 80);
+  --muted: oklch(0.22 0.012 60);
+  --muted-foreground: oklch(0.65 0.012 60);
+  --accent: oklch(0.22 0.012 60);
+  --accent-foreground: oklch(0.95 0.008 80);
+  --destructive: oklch(0.65 0.2 25);
+  --border: oklch(0.27 0.012 60);
+  --input: oklch(0.27 0.012 60);
+  --ring: oklch(0.7 0.18 40);
+  --chart-1: oklch(0.7 0.18 40);
+  --chart-2: oklch(0.65 0.15 250);
+  --chart-3: oklch(0.7 0.16 150);
+  --chart-4: oklch(0.65 0.2 25);
+  --chart-5: oklch(0.55 0.05 60);
+  --sidebar: oklch(0.17 0.012 60);
+  --sidebar-foreground: oklch(0.95 0.008 80);
+  --sidebar-primary: oklch(0.7 0.18 40);
+  --sidebar-primary-foreground: oklch(0.13 0.01 60);
+  --sidebar-accent: oklch(0.22 0.012 60);
+  --sidebar-accent-foreground: oklch(0.95 0.008 80);
+  --sidebar-border: oklch(0.27 0.012 60);
+  --sidebar-ring: oklch(0.7 0.18 40);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "ss01", "cv11", "calt";
+  }
+  html {
+    @apply font-sans;
+  }
+
+  *:focus-visible {
+    @apply outline-2 outline-offset-2;
+    outline-color: var(--ring);
+    border-radius: 6px;
+  }
+
+  /* Editorial typography refinements */
+  h1, h2, h3, h4 {
+    letter-spacing: -0.02em;
+  }
+  h1 {
+    letter-spacing: -0.035em;
+  }
+}
+
+/* ─── Custom scrollbar ──────────────────────────────────────────────────── */
+@layer base {
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in oklab, var(--foreground) 12%, transparent);
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in oklab, var(--primary) 50%, transparent);
+    background-clip: content-box;
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in oklab, var(--foreground) 12%, transparent) transparent;
+  }
+}
+
+/* ─── Utility classes ───────────────────────────────────────────────────── */
+@layer utilities {
+  .glass-card {
+    background-color: color-mix(in oklab, var(--card) 80%, transparent);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
+  }
+
+  .text-gradient-primary {
+    background-image: linear-gradient(135deg, oklch(0.6 0.21 38) 0%, oklch(0.55 0.22 22) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hover-lift {
+    transition:
+      transform 250ms ease-out,
+      box-shadow 250ms ease-out,
+      border-color 250ms ease-out;
+  }
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px -16px color-mix(in oklab, var(--foreground) 25%, transparent);
+  }
+
+  /* Subtle paper-like grain background for editorial feel */
+  .paper-bg {
+    position: relative;
+  }
+  .paper-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+  }
+
+  .grid-mask {
+    background-image:
+      linear-gradient(to right, color-mix(in oklab, var(--foreground) 6%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in oklab, var(--foreground) 6%, transparent) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 60% 50% at 50% 40%, #000 50%, transparent 100%);
+  }
+
+  /* Editorial serif for accent display text (when needed) */
+  .font-display {
+    font-family: var(--font-sans), Georgia, "Times New Roman", serif;
+    font-feature-settings: "ss01", "cv11", "kern", "liga";
+  }
+}
+
+/* ─── Animations ────────────────────────────────────────────────────────── */
+@keyframes retroscan-pulse-border {
+  0%, 100% {
+    border-color: color-mix(in oklab, var(--primary) 30%, transparent);
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--primary) 25%, transparent);
+  }
+  50% {
+    border-color: color-mix(in oklab, var(--primary) 70%, transparent);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--primary) 10%, transparent);
+  }
+}
+
+@keyframes retroscan-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes retroscan-float-up {
+  0% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-pulse-border {
+  animation: retroscan-pulse-border 2.4s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in oklab, var(--primary) 12%, transparent) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: retroscan-shimmer 2.2s ease-in-out infinite;
+}
+
+.animate-float-up {
+  animation: retroscan-float-up 320ms ease-out both;
+}
+
+/* Leaflet popup theming — light and dark friendly */
+.leaflet-popup-content-wrapper {
+  background: var(--card);
+  color: var(--card-foreground);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 12px 28px -10px color-mix(in oklab, var(--foreground) 20%, transparent);
+}
+.leaflet-popup-tip {
+  background: var(--card);
+}
+.leaflet-popup-content {
+  margin: 12px 14px !important;
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+.leaflet-container a.leaflet-popup-close-button {
+  color: var(--muted-foreground);
+}
+
+/* ─── Reduced motion ────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-pulse-border,
+  .animate-shimmer,
+  .animate-float-up {
+    animation: none !important;
+  }
+}
