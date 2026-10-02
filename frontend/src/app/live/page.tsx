@@ -161,6 +161,22 @@ export default function LivePage() {
     []
   );
 
+  // iOS Safari workaround: speechSynthesis must be "unlocked" from a user
+  // gesture. We speak a silent utterance on the Start Analysis button click
+  // so subsequent async calls work. This ref tracks if we've done that.
+  const speechUnlockedRef = useRef(false);
+
+  const unlockSpeech = useCallback(() => {
+    if (speechUnlockedRef.current) return;
+    if (typeof window === "undefined" || !window.speechSynthesis) return;
+    try {
+      const u = new SpeechSynthesisUtterance("");
+      u.volume = 0;
+      window.speechSynthesis.speak(u);
+      speechUnlockedRef.current = true;
+    } catch {}
+  }, []);
+
   const speakDetection = useCallback(
     (det: LiveDetection) => {
       if (!voiceEnabled) return;
@@ -204,6 +220,7 @@ export default function LivePage() {
         if (voice) utter.voice = voice;
         utter.rate = 1;
         utter.pitch = 1;
+        utter.volume = 1;
         utter.onstart = () => setIsSpeaking(true);
         utter.onend = () => setIsSpeaking(false);
         utter.onerror = () => setIsSpeaking(false);
@@ -290,6 +307,8 @@ export default function LivePage() {
 
   const startAnalysis = useCallback(() => {
     if (!isStreaming) return;
+    // Unlock iOS speech on user gesture
+    unlockSpeech();
     setIsAnalyzing(true);
     setSavedScanId(null);
     analyzingRef.current = true;
@@ -618,6 +637,8 @@ export default function LivePage() {
                     onCheckedChange={(checked) => {
                       setVoiceEnabled(checked);
                       if (checked) {
+                        // Unlock iOS speech on this user gesture
+                        unlockSpeech();
                         toast.success(
                           voiceLang === "hi"
                             ? "ध्वनि चेतावनी चालू"

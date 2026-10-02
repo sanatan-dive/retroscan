@@ -22,7 +22,7 @@ sleep 1
 # ─── Start Backend ─────────────────────────────
 echo "🐍 Starting FastAPI backend on :8000..."
 cd "$ROOT/backend"
-python3 -m uvicorn app.main:app --host 0.0.0.0 --port 8000 > /tmp/retroscan-backend.log 2>&1 &
+python3 -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 2 > /tmp/retroscan-backend.log 2>&1 &
 BACKEND_PID=$!
 echo "   PID: $BACKEND_PID"
 
